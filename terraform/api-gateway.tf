@@ -1,15 +1,18 @@
 resource "aws_apigatewayv2_api" "image_api" {
+  provider      = aws.eu_central_1
   name          = "image-service-api"
   protocol_type = "HTTP"
 }
 
 resource "aws_apigatewayv2_stage" "image_api_stage" {
+  provider    = aws.eu_central_1
   api_id      = aws_apigatewayv2_api.image_api.id
   name        = "$default"
   auto_deploy = true
 }
 
 resource "aws_apigatewayv2_integration" "lambda_integration" {
+  provider           = aws.eu_central_1
   api_id             = aws_apigatewayv2_api.image_api.id
   integration_type   = "AWS_PROXY"
   integration_uri    = aws_lambda_function.image_service.invoke_arn
@@ -18,12 +21,14 @@ resource "aws_apigatewayv2_integration" "lambda_integration" {
 }
 
 resource "aws_apigatewayv2_route" "image_route" {
+  provider  = aws.eu_central_1
   api_id    = aws_apigatewayv2_api.image_api.id
   route_key = "GET /{image}"
   target    = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
 }
 
 resource "aws_lambda_permission" "api_gateway_permission" {
+  provider      = aws.eu_central_1
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.image_service.function_name

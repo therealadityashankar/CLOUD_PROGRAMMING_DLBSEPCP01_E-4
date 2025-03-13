@@ -1,13 +1,13 @@
 variable "aws_region" {
-  description = "AWS region to deploy resources"
+  description = "AWS region"
   type        = string
-  default     = "us-east-1"
+  default     = "eu-central-1"
 }
 
 variable "bucket_name" {
-  description = "Name of the S3 bucket to store images"
+  description = "Name of the S3 bucket"
   type        = string
-  default     = "image-service-bucket-unique-name"
+  default     = "image-service-bucket-20250314"
 }
 
 variable "dynamodb_table_name" {
@@ -19,5 +19,5 @@ variable "dynamodb_table_name" {
 variable "lambda_function_name" {
   description = "Name of the Lambda function"
   type        = string
-  default     = "image-service-function"
+  default     = "image-getter"
 } 

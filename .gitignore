@@ -41,3 +41,6 @@ Thumbs.db
 
 # Test output files
 test_output_* 
+
+# Terraform backup files
+*.backup

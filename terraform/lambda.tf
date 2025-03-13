@@ -1,4 +1,5 @@
 resource "aws_lambda_function" "image_service" {
+  provider        = aws.eu_central_1
   function_name    = var.lambda_function_name
   filename         = data.archive_file.lambda_zip.output_path
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
@@ -10,7 +11,7 @@ resource "aws_lambda_function" "image_service" {
 
   environment {
     variables = {
-      BUCKET_NAME = aws_s3_bucket.image_bucket.bucket
+      BUCKET_NAME = var.bucket_name
     }
   }
 }
@@ -22,6 +23,7 @@ data "archive_file" "lambda_zip" {
 }
 
 resource "aws_iam_policy" "lambda_policy" {
+  provider     = aws.eu_central_1
   name        = "image_service_lambda_policy"
   description = "Policy for Lambda to access S3 and DynamoDB"
 
@@ -63,6 +65,7 @@ resource "aws_iam_policy" "lambda_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
+  provider   = aws.eu_central_1
   role       = aws_iam_role.lambda_role.name
   policy_arn = aws_iam_policy.lambda_policy.arn
 } 
