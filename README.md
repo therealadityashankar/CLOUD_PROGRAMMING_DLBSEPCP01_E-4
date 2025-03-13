@@ -66,13 +66,13 @@ aws s3 cp path/to/local/image.jpg s3://your-bucket-name/image.jpg
 The service includes 119 sample cat images uploaded to the S3 bucket. These can be accessed using the following URL pattern:
 
 ```
-https://gw5jyewmo9.execute-api.us-east-1.amazonaws.com/cat{n}.jpg
+https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat{n}.jpg
 ```
 
 where `{n}` is a number from 0 to 118. For example:
-- `https://gw5jyewmo9.execute-api.us-east-1.amazonaws.com/cat0.jpg`
-- `https://gw5jyewmo9.execute-api.us-east-1.amazonaws.com/cat42.jpg`
-- `https://gw5jyewmo9.execute-api.us-east-1.amazonaws.com/cat118.jpg`
+- `https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat0.jpg`
+- `https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat42.jpg`
+- `https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat118.jpg`
 
 ## Monitoring
 
