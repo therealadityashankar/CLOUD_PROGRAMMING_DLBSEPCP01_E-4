@@ -1,19 +1,8 @@
-# Image Service with AWS Lambda, S3, and DynamoDB
+# Image Ranking Service with AWS Lambda, S3, and DynamoDB
+
+<img src="/readme-stuff/image_ranker.png" alt="Project Image" width="200" height="200" />
 
 This project implements a simple service that retrieves images from AWS S3 and serves them via an API endpoint. The service is built using AWS Lambda, API Gateway, S3, and DynamoDB, and is deployed using Terraform.
-
-## Architecture
-
-- **AWS Lambda**: Handles the image retrieval logic
-- **API Gateway**: Exposes the Lambda function as a REST API
-- **S3**: Stores the images
-- **DynamoDB**: Stores metadata about image access
-
-## Prerequisites
-
-- AWS CLI configured with appropriate credentials
-- Terraform installed
-- Python 3.9+
 
 ## Setup
 
@@ -23,13 +12,8 @@ This project implements a simple service that retrieves images from AWS S3 and s
 
 ### Setting up the Python Environment
 
-You can set up the Python virtual environment using the provided setup script:
+You can set up the Python virtual environment via the following way:
 
-```bash
-./setup.sh
-```
-
-Or manually:
 
 ```bash
 # Create and activate virtual environment
@@ -40,11 +24,6 @@ source venv/bin/activate
 pip install -r python/requirements.txt
 ```
 
-To deactivate the virtual environment when you're done:
-
-```bash
-deactivate
-```
 
 ## Deployment
 
@@ -102,7 +81,3 @@ The Lambda function logs all requests to CloudWatch Logs. Additionally, image ac
 - Image ID
 - Access count
 - Last accessed timestamp
-
-## License
-
-MIT 

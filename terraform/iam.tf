@@ -1,4 +1,3 @@
-# IAM role for Lambda
 resource "aws_iam_role" "lambda_role" {
   name = "image_service_lambda_role"
 
@@ -16,7 +15,6 @@ resource "aws_iam_role" "lambda_role" {
   })
 }
 
-# IAM policy for Lambda to access S3
 resource "aws_iam_policy" "lambda_s3_policy" {
   name        = "image_service_s3_policy"
   description = "Policy for Lambda to access S3"
@@ -48,7 +46,6 @@ resource "aws_iam_policy" "lambda_s3_policy" {
   })
 }
 
-# Attach S3 policy to role
 resource "aws_iam_role_policy_attachment" "lambda_s3_policy_attachment" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = aws_iam_policy.lambda_s3_policy.arn
