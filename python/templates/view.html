@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Image Viewer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            background: white;
+            border: 2px solid #e8e0d5;
+            border-radius: 16px;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            position: relative;
+        }
+
+        .image-section {
+            padding-right: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%;
+        }
+
+        .image-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 2px solid #e8e0d5;
+            border-radius: 12px;
+        }
+
+        .page-info {
+            text-align: right;
+            padding: 0;
+            font-weight: 500;
+            background: white;
+        }
+
+        .data-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-left: 1rem;
+        }
+
+        .stats {
+            font-size: 0.9rem;
+            margin: 2rem 0;
+            width: 100%;
+        }
+
+        .stats table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .stats td {
+            padding: 0.5rem;
+            border: 1px solid #e8e0d5;
+        }
+
+        .stats td:first-child {
+            font-weight: 500;
+            width: 40%;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: 1px solid #e8e0d5;
+            border-radius: 8px;
+            background: transparent;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .btn:hover {
+            background: #e8e0d5;
+            color: #333;
+        }
+
+        .btn.vote-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .vote-btn .emoji {
+            font-size: 1.2rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .voting {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .rankings-link {
+            margin-top: 0.5rem;
+        }
+
+        .rankings-link a {
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #e8e0d5;
+            padding-bottom: 2px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .rankings-link a:hover {
+            border-bottom-width: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                width: 95%;
+            }
+
+            .image-section {
+                border-right: none;
+                border-bottom: 2px solid #e8e0d5;
+                padding-right: 0;
+                padding-bottom: 2rem;
+            }
+
+            .data-section {
+                padding-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-section">
+            <div class="image-container">
+                <img src="/--IMAGE_NAME--" alt="Cat --IMAGE_INDEX--">
+            </div>
+            <div class="page-info">Cat Image --IMAGE_INDEX-- of 118</div>
+        </div>
+
+        <div class="data-section">
+            <div>
+                <div class="navigation">
+                    <a href="/view?index=--PREV_INDEX--" class="btn">← Previous Cat</a>
+                    <a href="/view?index=--NEXT_INDEX--" class="btn">Next Cat →</a>
+                </div>
+
+                <div class="voting">
+                    <button class="btn vote-btn upvote" onclick="vote('upvote')">
+                        <span class="emoji">▲</span>
+                        Upvote
+                    </button>
+                    <button class="btn vote-btn downvote" onclick="vote('downvote')">
+                        <span class="emoji">▼</span>
+                        Downvote
+                    </button>
+                </div>
+
+                <div class="stats">
+                    <table>
+                        <tr>
+                            <td>Views</td>
+                            <td>--VIEWS--</td>
+                        </tr>
+                        <tr>
+                            <td>Upvotes</td>
+                            <td>--UPVOTES--</td>
+                        </tr>
+                        <tr>
+                            <td>Downvotes</td>
+                            <td>--DOWNVOTES--</td>
+                        </tr>
+                        <tr>
+                            <td>Score</td>
+                            <td>--SCORE--</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="rankings-link">
+                    <a href="/rankings">View All Rankings</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function vote(voteType) {
+            fetch('/--IMAGE_NAME--/vote', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    vote: voteType
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Vote recorded!');
+                    location.reload();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(error => {
+                alert('Error: ' + error);
+            });
+        }
+    </script>
+</body>
+</html> 
