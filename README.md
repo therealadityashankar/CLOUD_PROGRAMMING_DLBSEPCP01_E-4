@@ -2,7 +2,40 @@
 
 <img src="/readme-stuff/image_ranker.png" alt="Project Image" width="200" height="200" />
 
-This project implements a simple service that retrieves images from AWS S3 and serves them via an API endpoint. The service is built using AWS Lambda, API Gateway, S3, and DynamoDB, and is deployed using Terraform.
+This project implements a simple service that retrieves images from AWS Lambda, API Gateway, S3, and DynamoDB, and is deployed using Terraform.
+
+# All routes so far!
+
+### Image Routes
+- `GET https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/{image}` - Get a specific image
+  - Example: 
+    - `https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat0.jpg`
+    - `https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat42.jpg`
+    - `https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat118.jpg`
+  - Valid image numbers: 0-118
+
+### Viewer Routes
+- `GET https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/view` - Interactive image viewer interface
+  - Example: 
+    - `https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/view?index=0`
+  - Query params:
+    - `index`: Number between 0-118
+
+### Ranking Routes
+- `GET https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/rankings` - View all images sorted by score
+  - Example: 
+    - `https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/rankings`
+
+### Voting Routes
+- `POST https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/{image}/vote` - Vote on a specific image
+  - Example: 
+    - `https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat0.jpg/vote`
+  - Request body:
+    ```json
+    {
+      "vote": "upvote"  // or "downvote"
+    }
+    ```
 
 ## Setup
 
@@ -73,6 +106,39 @@ where `{n}` is a number from 0 to 118. For example:
 - `https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat0.jpg`
 - `https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat42.jpg`
 - `https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat118.jpg`
+
+### Interactive Features
+
+The service includes several interactive features:
+
+1. **Image Viewer**: View images with navigation controls
+   ```
+   https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/view?index=0
+   ```
+   This page allows you to:
+   - Navigate between images
+   - View image statistics (views, upvotes, downvotes)
+   - Upvote or downvote images
+
+2. **Image Rankings**: View all images ranked by score
+   ```
+   https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/rankings
+   ```
+   This page displays:
+   - All images sorted by score (upvotes minus downvotes)
+   - View counts and voting statistics
+   - Links to view individual images
+
+3. **Voting API**: Vote on images via POST request
+   ```
+   POST https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat0.jpg/vote
+   ```
+   With JSON body:
+   ```json
+   {
+     "vote": "upvote" // or "downvote"
+   }
+   ```
 
 ## Monitoring
 
