@@ -29,9 +29,11 @@ def lambda_handler(event, context):
             return rankings_handler(event, context, s3_client, dynamodb, BUCKET_NAME, TABLE_NAME)
         else:
             return {
-                'statusCode': 404,
-                'headers': {'Content-Type': 'application/json'},
-                'body': json.dumps({'error': 'Not found'})
+                'statusCode': 302,
+                'headers': {
+                    'Location': '/view'
+                },
+                'body': ''
             }
     elif http_method == 'POST':
         if path.endswith('/vote'):
