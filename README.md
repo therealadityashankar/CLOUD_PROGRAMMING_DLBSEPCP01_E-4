@@ -47,7 +47,6 @@ This project implements a simple service that retrieves images from AWS Lambda, 
 
 You can set up the Python virtual environment via the following way:
 
-
 ```bash
 # Create and activate virtual environment
 python3 -m venv venv
@@ -57,6 +56,24 @@ source venv/bin/activate
 pip install -r python/requirements.txt
 ```
 
+### Uploading Cat Images to S3
+
+This project includes a `cat_photos` directory containing 119 cat images that are required for the application. Before using the application, these images need to be uploaded to your S3 bucket.
+
+**Note:** The cat images have already been uploaded to the project's S3 bucket. These instructions are for setting up a new instance of the project with your own S3 bucket.
+
+```bash
+# Navigate to the cat_photos directory
+cd cat_photos
+
+# Upload all cat images to S3
+aws s3 cp . s3://your-bucket-name/ --recursive --include "*.jpg" --acl public-read
+
+# Alternatively, you can use the following command from the project root:
+aws s3 cp cat_photos/ s3://your-bucket-name/ --recursive --include "*.jpg" --acl public-read
+```
+
+Replace `your-bucket-name` with the name of your S3 bucket defined in your Terraform variables.
 
 ## Deployment
 
@@ -75,75 +92,3 @@ terraform apply
 ## Usage
 
 After deployment, Terraform will output the API Gateway URL. You can use this URL to access your images:
-
-```
-https://<api-gateway-id>.execute-api.<region>.amazonaws.com/<image-name>
-```
-
-For example, if you have an image named `example.jpg` in your S3 bucket, you can access it at:
-
-```
-https://<api-gateway-id>.execute-api.<region>.amazonaws.com/example.jpg
-```
-
-## Uploading Images
-
-You can upload images to the S3 bucket using the AWS CLI:
-
-```bash
-aws s3 cp path/to/local/image.jpg s3://your-bucket-name/image.jpg
-```
-
-### Sample Images
-
-The service includes 119 sample cat images uploaded to the S3 bucket. These can be accessed using the following URL pattern:
-
-```
-https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat{n}.jpg
-```
-
-where `{n}` is a number from 0 to 118. For example:
-- `https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat0.jpg`
-- `https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat42.jpg`
-- `https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat118.jpg`
-
-### Interactive Features
-
-The service includes several interactive features:
-
-1. **Image Viewer**: View images with navigation controls
-   ```
-   https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/view?index=0
-   ```
-   This page allows you to:
-   - Navigate between images
-   - View image statistics (views, upvotes, downvotes)
-   - Upvote or downvote images
-
-2. **Image Rankings**: View all images ranked by score
-   ```
-   https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/rankings
-   ```
-   This page displays:
-   - All images sorted by score (upvotes minus downvotes)
-   - View counts and voting statistics
-   - Links to view individual images
-
-3. **Voting API**: Vote on images via POST request
-   ```
-   POST https://edd7t1w3f1.execute-api.eu-central-1.amazonaws.com/cat0.jpg/vote
-   ```
-   With JSON body:
-   ```json
-   {
-     "vote": "upvote" // or "downvote"
-   }
-   ```
-
-## Monitoring
-
-The Lambda function logs all requests to CloudWatch Logs. Additionally, image access is tracked in the DynamoDB table, which includes:
-
-- Image ID
-- Access count
-- Last accessed timestamp
